@@ -1,0 +1,207 @@
+<!DOCTYPE html> 
+<html lang="th"> 
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>loing...</title>
+
+<link rel="icon" type="image/gif" href="https://i.pinimg.com/originals/4f/2a/0b/4f2a0ba1f231e3cb041f2a7f6fedb3d9.gif"  />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;400;600&display=swap" rel="stylesheet">
+    
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #020414, #000);
+  overflow: hidden;
+  font-family: 'Kanit', sans-serif;
+}
+
+/* Firefly */
+.firefly {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: cyan;
+  border-radius: 50%;
+  box-shadow: 0 0 15px cyan;
+  animation: move linear infinite, glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes move {
+  from { transform: translate(0,0); }
+  to { transform: translate(300px, -300px); }
+}
+
+@keyframes glow {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
+}
+
+/* Center */
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: cyan;
+  z-index: 1;
+}
+
+/* Avatar */
+.avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: auto;
+  box-shadow: 0 0 40px cyan;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* PIN */
+.pin {
+  margin-top: 30px;
+}
+
+.pin input {
+  width: 50px;
+  height: 60px;
+  margin: 5px;
+  font-size: 28px;
+  text-align: center;
+  background: transparent;
+  border: 2px solid cyan;
+  border-radius: 10px;
+  color: cyan;
+  box-shadow: 0 0 15px cyan;
+}
+
+.pin input:focus {
+  outline: none;
+  box-shadow: 0 0 25px cyan;
+}
+
+#message {
+  margin-top: 20px;
+  font-size: 22px;
+}
+
+/* ===== Face Overlay ===== */
+#faceScreen {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, #020414, #000);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 1s ease;
+}
+
+#faceScreen img {
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  box-shadow: 0 0 80px cyan;
+  animation: pulse 2s infinite;
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 40px cyan; }
+  50% { box-shadow: 0 0 100px cyan; }
+  100% { box-shadow: 0 0 40px cyan; }
+}
+</style>
+</head>
+
+<body>
+
+<script>
+for (let i = 0; i < 40; i++) {
+  let f = document.createElement("div");
+  f.className = "firefly";
+  f.style.left = Math.random() * 100 + "vw";
+  f.style.top = Math.random() * 100 + "vh";
+  f.style.animationDuration = (5 + Math.random() * 10) + "s";
+  document.body.appendChild(f);
+}
+</script>
+
+<div class="container">
+
+  <div class="avatar">
+    <img src="https://i.pinimg.com/originals/d9/a1/f3/d9a1f394ff5722a94549f92fa3abcf0e.gif">
+  </div>
+
+  <div class="pin">
+    <input type="password" maxlength="1" oninput="next(this)">
+    <input type="password" maxlength="1" oninput="next(this)">
+    <input type="password" maxlength="1" oninput="check()">
+  </div>
+
+  <div id="message"></div>
+
+</div>
+
+<!-- Face Screen -->
+<div id="faceScreen">
+  <!-- 🔥 เปลี่ยนเป็นรูปหน้าคนที่ต้องการได้ -->
+  <img src="https://i.pinimg.com/originals/a3/c6/d8/a3c6d8e59e95877694065f24852cbc9b.gif">
+</div>
+
+<script>
+const PASSWORD = "777";
+const REDIRECT_URL = "https://www.canva.com/design/DAHALlRphbM/oQVAIH-d7SgmhsvTccd5NQ/edit?utm_content=DAHALlRphbM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton";
+
+function next(el) {
+  if (el.value && el.nextElementSibling) {
+    el.nextElementSibling.focus();
+  }
+}
+
+function check() {
+  let pin = "";
+  document.querySelectorAll(".pin input").forEach(i => pin += i.value);
+
+  if (pin === PASSWORD) {
+
+    // ซ่อนหน้าใส่รหัส
+    document.querySelector(".container").style.display = "none";
+
+    // แสดงหน้าคน
+    document.getElementById("faceScreen").style.display = "flex";
+
+    // หน่วงก่อนเด้งลิงก์
+    setTimeout(() => {
+      window.location.href = REDIRECT_URL;
+    }, 2500);
+
+  } else {
+    const msg = document.getElementById("message");
+    msg.innerHTML = "❌ WRONG PASSWORD";
+    msg.style.color = "red";
+
+    document.querySelectorAll(".pin input").forEach(i => i.value = "");
+    document.querySelector(".pin input").focus();
+  }
+}
+</script>
+
+</body>
+</html>
